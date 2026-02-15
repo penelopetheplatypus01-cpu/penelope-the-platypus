@@ -136,6 +136,61 @@ header p { margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9; }
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
+/* TOKENOMICS */
+.tokenomics {
+  margin-top: 4rem;
+  background: #78350f;
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 30px;
+  text-align: center;
+}
+
+.tokenomics h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.token-box {
+  background: #92400e;
+  padding: 1.5rem;
+  border-radius: 20px;
+}
+
+/* MEME VAULT (HIDDEN) */
+.meme-vault {
+  display: none;
+  margin-top: 4rem;
+  background: #111;
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 30px;
+  text-align: center;
+}
+
+.meme-vault img {
+  max-width: 250px;
+  margin: 1rem;
+  border-radius: 20px;
+}
+
+/* Easter Egg */
+.easter-egg {
+  cursor: pointer;
+  font-weight: normal;
+  transition: color 0.2s ease;
+}
+
+.easter-egg:hover {
+  color: #ff4d00;
+}
+
 /* BUTTONS */
 .socials {
   margin-top: 1.5rem;
@@ -158,7 +213,7 @@ header p { margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9; }
 .btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
 .btn.x { background: #000; color: #fff; }
-.btn.tg { background: #229ED9; color: #fff; }
+.btn.xc { background: #000; color: #fff; }
 .btn.dex { background: #22c55e; color: #052e16; }
 .btn.wiki { background: #fff; color: #052e16; }
 
@@ -178,8 +233,15 @@ header p { margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9; }
   z-index: 100;
 }
 
-  /*underline link */
+  /* underline link */
 .no-underline-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+  /* header-link */
+.header-link {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -204,12 +266,17 @@ footer {
 <body>
 
 <header>
-  <h1>🦆 Penelope the Platypus</h1>
+  <h1>
+    <a href="about.html" class="header-link">
+    🦆 Penelope the Platypus
+    </a>
+  </h1>
+
   <p>The only platypus who outsmarted a zoo with pure audacity</p>
 
   <div class="socials">
     <a href="https://x.com/PNLopePlatypus" target="_blank" class="btn x">𝕏</a>
-    <a href="https://t.me/pnlopeplatypus" target="_blank" class="btn tg">Telegram</a>
+    <a href="https://x.com" target="_blank" class="btn xc">Community</a>
     <a href="https://dexscreener.com" target="_blank" class="btn dex">DexScreener</a>
     <a href="https://en.wikipedia.org/wiki/Penelope_(platypus)" target="_blank" class="btn wiki">Wikipedia</a>
   </div>
@@ -231,30 +298,71 @@ footer {
         Penelope fake a pregnancy like a true mastermind.
         She secured
         <a href ="https://pump.fun/" target="_blank" class="no-underline-link">
-          bundle food
+          bundle
         </a>
-        and played the long game. The zookeeper never saw it coming.
+        food and played the long game. The zookeeper never saw it coming.
         Then she made her legendary zoo escape. <br><br>
         Lesson: Work smarter, not harder. 🧠✨
-
-        <br><br><br>
-
+	
+	<br><br>
       <h2>NOTICE 📢</h2>
       <p>
-        "Website still in development. Have a suggestion for a feature? Send us a message at [penelopetheplatypus01@gmail.com]." 
+        "Move your cursor to explore. Website still in development. Have a suggestion? Leave some
+	<a href ="https://forms.gle/wPybnPiphrphsEWS7" target="_blank">HERE</a>"
       </p>
       </p>
     </div>
   </section>
   <section class="facts"> 
-    <div class="fact-card"><h3>🧠 IQ: Unclassified</h3><p>Escaped captivity, ran the ultimate fake-pregnancy side quest, and left humanity questioning everything. 🧠✨</p></div>
-    <div class="fact-card"><h3>⚠️ Legal Status</h3><p>Officially “missing.” Unofficially “too clever to be contained.” Just vibing in a legally confusing egg-laying mammal situation.</p></div>
+    <div class="fact-card"><h3>🧠 IQ: Unclassified</h3>
+	<p>
+	   Escaped captivity, ran the ultimate fake-pregnancy side quest, 
+	   and left humanity questioning everything. 🧠✨
+	</p>
+    </div>
+    <div class="fact-card"><h3>⚠️ Legal Status</h3>
+	<p>Officially “missing.” Unofficially “too clever to be contained.” 
+	  Just vibing in a legally confusing
+	  <span class="easter-egg" ondblclick="unlockVault()">egg</span>
+ 	  -laying mammal situation.
+	</p></div>
   </section>
+
+  <section class="tokenomics">
+    <h2>Tokenomics</h2>
+    <div class="token-grid">
+      <div class="token-box"><h3>Supply</h3><p>1,000,000,000</p></div>
+      <div class="token-box"><h3>Tax</h3><p>0%</p></div>
+      <div class="token-box"><h3>Liquidity</h3><p>Locked</p></div>
+      <div class="token-box"><h3>Ownership</h3><p>Renounced</p></div>
+    </div>
+  </section>
+
+  <section id="secret" class="meme-vault">
+    <h2>🕵️ Secret Meme Vault</h2>
+    <p>You found it. You are smart!</p>
+    <p>Just like Penelope the Platypus!</p>
+    <img src="easter egg.png">
+  </section>
+
+
 </main>
 
 <footer>© 2026 Penelope the Platypus • Strategically Free</footer>
 
 <a href="https://pump.fun/" target="_blank" class="floating-buy">BUY $PNLope</a>
+
+<script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function unlockVault() {
+  const vault = document.getElementById("secret");
+  vault.style.display = "block";
+  vault.scrollIntoView({ behavior: "smooth" });
+}
+</script>
 
 </body>
 </html>
