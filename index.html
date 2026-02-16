@@ -259,10 +259,41 @@ footer {
   header h1 { font-size: 2.3rem; }
   .token-label { font-size: 2.4rem; top: -6rem; }
 }
+
+/* === MUSIC BUTTON (ADDED) === */
+.music-toggle {
+  position: fixed;
+  bottom: 90px;
+  right: 22px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #78350f;
+  color: #fff7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  z-index: 200;
+}
+
+.music-toggle.playing {
+  background: #22c55e;
+  color: #052e16;
+}
+
 </style>
 </head>
 
 <body>
+
+<audio id="bg-music" loop preload="auto">
+  <source src="platypus song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-toggle" title="Toggle music">🎵</div>
 
 <header>
   <h1>
@@ -285,7 +316,7 @@ footer {
     <img src="penelope.png" alt="Penelope the Platypus" />
     <div class="story">
 
-      <a href="degenerate.html" class="token-label">
+      <a href="degenerate.html" target="_blank" class="token-label">
         $PNLope <span class="live-dot"></span><span class="live-text">LIVE</span>
       </a>
 
@@ -359,6 +390,26 @@ function unlockVault() {
   vault.style.display = "block";
   vault.scrollIntoView({ behavior: "smooth" });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const music = document.getElementById('bg-music');
+  const toggle = document.querySelector('.music-toggle');
+
+  if (!music || !toggle) return;
+
+  music.volume = 0.35;
+
+  toggle.addEventListener('click', () => {
+    if (music.paused) {
+      music.play().catch(() => {});
+      toggle.classList.add('playing');
+    } else {
+      music.pause();
+      toggle.classList.remove('playing');
+    }
+  });
+});
+
 </script>
 
 </body>
