@@ -284,6 +284,19 @@ footer {
   color: #052e16;
 }
 
+/* === DRAGGABLE FLOATING BUY SAFETY === */
+.floating-buy {
+  touch-action: none;       /* required for mobile drag */
+  user-select: none;
+  cursor: grab;
+}
+
+.floating-buy.dragging {
+  cursor: grabbing;
+  opacity: 0.9;
+}
+
+
 </style>
 </head>
 
@@ -473,6 +486,100 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch(() => {});
   });
 });
+
+
+(() => {
+  const btn = document.querySelector('.floating-buy');
+  if (!btn) return;
+
+  let dragging = false;
+  let moved = false;
+  let startX = 0, startY = 0;
+  let offsetX = 0, offsetY = 0;
+
+  /* Ensure button starts with left/top so it can move smoothly */
+  const rect = btn.getBoundingClientRect();
+  btn.style.left = rect.left + 'px';
+  btn.style.top = rect.top + 'px';
+  btn.style.right = 'auto';
+  btn.style.bottom = 'auto';
+  btn.style.position = 'fixed';
+
+  const start = (x, y) => {
+    dragging = true;
+    moved = false;
+    startX = x;
+    startY = y;
+
+    const r = btn.getBoundingClientRect();
+    offsetX = x - r.left;
+    offsetY = y - r.top;
+
+    btn.style.transition = 'none';
+    btn.style.transform = 'scale(1.08)';
+    btn.style.boxShadow = '0 25px 45px rgba(0,0,0,0.55)';
+    btn.classList.add('dragging');
+  };
+
+  const move = (x, y) => {
+    if (!dragging) return;
+
+    const dx = Math.abs(x - startX);
+    const dy = Math.abs(y - startY);
+    if (dx > 5 || dy > 5) moved = true;
+
+    if (!moved) return;
+
+    btn.style.left = `${x - offsetX}px`;
+    btn.style.top = `${y - offsetY}px`;
+  };
+
+  const end = () => {
+    dragging = false;
+
+    btn.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
+    btn.style.transform = 'scale(1)';
+    btn.style.boxShadow = '0 15px 35px rgba(0,0,0,0.4)';
+    btn.classList.remove('dragging');
+  };
+
+  /* Desktop */
+  btn.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    start(e.clientX, e.clientY);
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', mouseUp);
+  });
+
+  const mouseMove = (e) => move(e.clientX, e.clientY);
+  const mouseUp = () => {
+    document.removeEventListener('mousemove', mouseMove);
+    document.removeEventListener('mouseup', mouseUp);
+    end();
+  };
+
+  /* Mobile */
+  btn.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    start(t.clientX, t.clientY);
+  }, { passive: true });
+
+  btn.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    move(t.clientX, t.clientY);
+  }, { passive: true });
+
+  btn.addEventListener('touchend', end);
+
+  /* Block click ONLY if dragged */
+  btn.addEventListener('click', (e) => {
+    if (moved) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+})();
+
 </script>
 
 </body>
